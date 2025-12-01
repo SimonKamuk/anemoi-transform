@@ -9,6 +9,7 @@
 
 
 from collections.abc import Iterator
+from typing import Literal
 
 import earthkit.data as ekd
 from earthkit.meteo.wind.array import polar_to_xy
@@ -44,6 +45,7 @@ class WindComponents(MatchingFieldsFilter):
         wind_direction: str = "wdir",
         convention: str = "meteo",
         radians: bool = False,
+        return_inputs: Literal["all", "none"] | list[str] = "all",
     ) -> None:
         """Initialize the WindComponents filter.
 
@@ -61,6 +63,8 @@ class WindComponents(MatchingFieldsFilter):
             Convention to use for conversion, by default "meteo".
         radians : bool, optional
             Whether to use radians, by default False.
+        return_inputs : Literal["all", "none"] | list[str], optional
+            List of which filter inputs should be returned, by default "all"
         """
 
         self.u_component = u_component
@@ -69,6 +73,7 @@ class WindComponents(MatchingFieldsFilter):
         self.wind_direction = wind_direction
         self.convention = convention
         self.radians = radians
+        self.return_inputs = return_inputs
 
         assert not self.radians, "Radians not (yet) supported"
 
